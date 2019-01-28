@@ -12,14 +12,14 @@ public class PathUtil {
         if(os.toLowerCase().startsWith("win")){
             basePath ="D:/img";
         }else {
-            basePath = "/Users/cxx/Downloads/images";
+            basePath = "/Users/cxx/Downloads";
         }
         basePath = basePath.replace("/",seperator);
         return basePath;
     }
     //根据业务需求返回图片的子路径
     public static String getShopImagePath(long shopId){
-        String imagePath = "upload/item/shop/" + shopId +"/";
+        String imagePath = "/images/item/shop/" + shopId +"/";
         return imagePath.replace("/",seperator);
     }
 

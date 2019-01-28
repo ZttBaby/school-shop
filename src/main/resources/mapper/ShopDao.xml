@@ -29,7 +29,7 @@
 			  phone=#{phone},
 		  </if>
 		  <if test="shopImg != null">
-			  shop_img=#{phone},
+			  shop_img=#{shopImg},
 		  </if>
 		  <if test="priority != null">
 			  priority=#{priority},

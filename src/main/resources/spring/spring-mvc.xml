@@ -14,44 +14,17 @@
     凡是有@control public void User()
     -->
     <context:component-scan base-package="com.qf.web"/>
+    <!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射 -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:default-servlet-handler />
     <!--mvc注解-->
     <mvc:annotation-driven/>
-
-    <mvc:resources location="/WEB-INF/html/" mapping="/html/*.html"/>
     <!--视图解析器-->
-    <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-         &lt;!&ndash;属性注入&ndash;&gt;
-         &lt;!&ndash;前缀&ndash;&gt;
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+         <!--&lt;!&ndash;属性注入&ndash;&gt;-->
+         <!--&lt;!&ndash;前缀&ndash;&gt;-->
          <property name="prefix" value="/WEB-INF/jsp/"/>
          <property name="suffix" value=".jsp"/>
-     </bean>-->
-    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/html/"/>
-    </bean>
-    <bean id="freemarkerConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean"></bean>
+     </bean>
 
-
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
-        <property name="contentType" value="text/html; charset=utf-8"/>
-        <property name="cache" value="true"/>
-        <!-- <property name="prefix" value="/WEB-INF/html/" /> -->
-        <property name="suffix" value=".html"/>
-        <property name="order" value="3"/>
-    </bean>
-    <!--<bean id="viewResolverJsp"-->
-          <!--class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--<property name="prefix" value="/WEB-INF/html/pages/" />-->
-        <!--<property name="suffix" value=".jsp" />-->
-        <!--<property name="order" value="2"/>-->
-    <!--</bean>-->
-    <!--静态资源放行，凡是页面上访问css js images这些静态文件时候，都不经过controller-->
-    <!--url路径如下：http://localhost:81/manager/css/hello.css-->
-    <!--静态资源放行：http://localhost:81/manager/css/hello.css本来是要经过contrller,但是配置了这句话，配置完了以后，直接去寻找webapp/css/hello.css-->
-    <!--<mvc:resources mapping="/css/**" location="/css/"/>-->
-    <!--<mvc:resources mapping="/js/**" location="/js/"/>-->
-    <!--&lt;!&ndash;<mvc:resources mapping="/images/**" location="/images/"/>&ndash;&gt;-->
-    <!--<mvc:resources mapping="/photo/**" location="/photo/1"/>-->
-    <!--<mvc:resources mapping="/static/**" location="/static/" />-->
-    <!--<mvc:resources mapping="/mealimages/**" location="/mealimages/" />-->
 </beans>

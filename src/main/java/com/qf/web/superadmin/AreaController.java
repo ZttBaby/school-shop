@@ -25,58 +25,9 @@ public class AreaController {
 
     @RequestMapping(value = "/test111", method = RequestMethod.GET)
     public String test(){
-        return "index";
+        return "666";
     }
-//
-//    @RequestMapping(value = "/mainpage", method = RequestMethod.GET)
-//    private String showMainPage() {
-//        return "mainpage";
-//    }
-//
-//    @RequestMapping(value = "/productdetail", method = RequestMethod.GET)
-//    private String showProductDetail() {
-//        return "productdetail";
-//    }
-//
-//    @RequestMapping(value = "/shopdetail", method = RequestMethod.GET)
-//    private String showShopDetail() {
-//        return "shopdetail";
-//    }
-//
-//    @RequestMapping(value = "/shoplist", method = RequestMethod.GET)
-//    private String showShopList() {
-//        return "shoplist";
-//    }
-//
-//    @RequestMapping(value = "/index", method = RequestMethod.GET)
-//    private String index() {
-//        return "index";
-//    }
-//
-//    @RequestMapping(value = "/mypoint", method = RequestMethod.GET)
-//    private String myPoint() {
-//        return "mypoint";
-//    }
-//
-//    @RequestMapping(value = "/myrecord", method = RequestMethod.GET)
-//    private String myRecord() {
-//        return "myrecord";
-//    }
-//
-//    @RequestMapping(value = "/pointrecord", method = RequestMethod.GET)
-//    private String pointRecord() {
-//        return "pointrecord";
-//    }
-//
-//    @RequestMapping(value = "/awarddetail", method = RequestMethod.GET)
-//    private String awardDetail() {
-//        return "awarddetail";
-//    }
-//
-//    @RequestMapping(value = "/customerbind", method = RequestMethod.GET)
-//    private String customerBind() {
-//        return "customerbind";
-//    }
+
 
 
     @RequestMapping(value = "/listadmin", method = RequestMethod.GET)
