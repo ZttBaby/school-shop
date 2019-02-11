@@ -1,21 +1,53 @@
 
 $(function () {
+    var shopId = getQueryString('shopId');
+    var isEdit = shopId?true:false;
     var initUrl = '/school/shopadmin/getshopinitinfo';
-    var registerShopUrl ='/school/shopadmin/getshopinitinfo/registershop';
-    alert(initUrl + "hahahaha");
+    var registerShopUrl ='/school/shopadmin/registershop';
+    var shopInfoUrl = '/school/shopadmin/getshopbyid?shopId=' + shopId;
+    var editShopUrl = '/school/shopadmin/modifyshop';
 
-    getShopInitInfo();
-    function getShopInitInfo() {
-        $.getJSON(initUrl,function (data) {
-            if(data.success){
-                var tempHtml = '';
-                var tempAreaHtml ='';
-                data.shopCategoryList.map(function (item,index){
-                    tempHtml += '<option data-id="'+item.shopCategoryId+'">'
-                    + item.shopCategoryName + '</option>';
+    if(!isEdit){
+        getShopInitInfo()
+    }else {
+        getShopInfo()
+    }
+
+  function getShopInfo(shopId) {
+        $.getJSON(shopInfoUrl, function (data) {
+            if (data.success) {
+                var shop = data.shop;
+                $('#shop-name').val(shop.shopName);
+                $('#shop-adder').val(shop.shopAddr);
+                $('#shop-phone').val(shop.phone);
+                $('#shop-desc').val(shop.shopDesc);
+                var shopCategory = '<option data-id="' + shop.shopCategory.shopCategoryId + '"selected>'
+                    + shop.shopCategory.shopCategoryName + '</option>';
+                var tempAreaHtml = '';
+                data.areaList.map(function (item, index) {
+                    tempAreaHtml += '<option data-id="' + item.areaId + '">'
+                        + item.areaName + '</option>';
                 });
-                data.areaList.map(function (item,index) {
-                    tempAreaHtml += '<option data-id="'+item.areaId+'">'
+                $('#shop-category').html(shopCategory);
+                $('#shop-category').attr('disabled', 'disabled');
+                $('#area').html(tempAreaHtml);
+                $("#area option[data-id='"+shop.area.areaId+"']").attr("selected","selected");
+            }
+
+        });
+    }
+
+    function getShopInitInfo() {
+        $.getJSON(initUrl, function (data) {
+            if (data.success) {
+                var tempHtml = '';
+                var tempAreaHtml = '';
+                data.shopCategoryList.map(function (item, index) {
+                    tempHtml += '<option data-id="' + item.shopCategoryId + '">'
+                        + item.shopCategoryName + '</option>';
+                });
+                data.areaList.map(function (item, index) {
+                    tempAreaHtml += '<option data-id="' + item.areaId + '">'
                         + item.areaName + '</option>';
                 });
                 $('#shop-category').html(tempHtml);
@@ -23,22 +55,26 @@ $(function () {
             }
 
         });
+    }
         $('#submit').click(function(){
             var shop = {};
+            if(isEdit){
+                shop.shopId =shopId;
+            }
             shop.shopName = $('#shop-name').val();
-            shop.shopAdder = $('#shop-adder').val();
+            shop.shopAddr = $('#shop-adder').val();
             shop.phone = $('#shop-phone').val();
             shop.shopDesc = $('#shop-desc').val();
-            shop.shopCategoryId = {
+            shop.shopCategory = {
                 //双层否定==肯定
                 shopCategoryId : $('#shop-category').find('option').not(function(){
-                    return !this.selected();
+                    return !this.selected;
                 }).data("id")
             };
             shop.area = {
                 areaId :
                     $('#area').find('option').not(function(){
-                        return !this.selected();
+                        return !this.selected;
                     }).data("id")
             };
             var shopImg = $('#shop-img')[0].files[0];
@@ -52,11 +88,11 @@ $(function () {
             }
             formData.append('verifyCodeActual',verifyCodeActual);
             $.ajax({
-                url:registerShopUrl,
+                url:(isEdit ? editShopUrl : registerShopUrl),
                 type:'POST',
                 data:formData,
                 contentType:false,
-                proceesData:false,
+                processData:false,
                 cache:false,
                 success:function(data){
                     if(data.success){
@@ -71,6 +107,5 @@ $(function () {
 
             });
         });
-        
-    }
+
 })

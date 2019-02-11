@@ -1,8 +1,10 @@
 package com.qf.service;
 
 import com.qf.BaseTest;
+import com.qf.dto.ImageHolder;
 import com.qf.dto.ShopExecution;
 import com.qf.enums.ShopStateEnum;
+import com.qf.exceptions.ShopOperationException;
 import com.qf.pojo.po.Area;
 import com.qf.pojo.po.PersonInfo;
 import com.qf.pojo.po.Shop;
@@ -11,6 +13,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -24,8 +27,32 @@ import static org.junit.Assert.assertEquals;
 public class ShopServiceTest extends BaseTest {
     @Autowired
     private ShopService shopService;
+    @Test
+    public void testGetShopList(){
+        Shop shopCondition = new Shop();
+        ShopCategory sc = new ShopCategory();
+        sc.setShopCategoryId(2L);
+        shopCondition.setShopCategory(sc);
+        ShopExecution shopList = shopService.getShopList(shopCondition, 1, 1);
+        System.out.println(shopList.getShopList().size());
+        System.out.println(shopList.getCount());
+    }
 
     @Test
+    @Ignore
+    public void testModifyShop() throws ShopOperationException ,FileNotFoundException{
+        Shop shop = new Shop();
+        shop.setShopId(23L);
+        shop.setShopName("我就是大帅比");
+        File shopImg = new File("/Users/cxx/Downloads/img/1.jpg");
+        InputStream is = new FileInputStream(shopImg);
+        ImageHolder imageHolder = new ImageHolder("1.jpg",is);
+
+        ShopExecution shopExecution = shopService.modifyShop(shop,imageHolder);
+        System.out.println("新的店铺地址"+shopExecution.getShop().getShopImg());
+    }
+    @Test
+    @Ignore
     public void testAddShop() throws FileNotFoundException {
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();
@@ -47,7 +74,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setEnableStatus(ShopStateEnum.CHECK.getState());
         File shopImg = new File("/Users/cxx/Downloads/img/1.jpg");
         InputStream is = new FileInputStream(shopImg);
-        ShopExecution se = shopService.addShop(shop,is,shopImg.getName());
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(),is);
+        ShopExecution se = shopService.addShop(shop,imageHolder);
         assertEquals(ShopStateEnum.CHECK.getState(),se.getState());
     }
 }

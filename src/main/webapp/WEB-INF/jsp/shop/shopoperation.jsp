@@ -17,10 +17,8 @@
 
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
-
     <link rel="apple-touch-icon-precomposed" href="/assets/img/apple-touch-icon-114x114.png">
-    <script src="/assets/js/zepto.js"></script>
-    <script src="/assets/js/config.js"></script>
+
     <script>
         //ga
     </script>
@@ -39,7 +37,7 @@
 <div class="page-group">
     <div id="page-label-input" class="page">
         <header class="bar bar-nav">
-            <a class="button button-link button-nav pull-left back" href="/demos/form">
+            <a class="button button-link button-nav pull-left back" href="/school/shopadmin/shoplist">
                 <span class="icon icon-left"></span>
                 返回
             </a>
